@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-app-argo
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: all-openshift-clusters
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: 'nginx-app-argo-{{name}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/giannisalinetti/open-cluster-management-examples.git
+        targetRevision: main
+        path: application-lifecycle-management/nginx-app-kustomize/resources/overlays/prod
+      destination:
+        server: '{{server}}'
+        namespace: nginx-app-argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+            - PruneLast=true
+            - CreateNamespace=true
+---
+apiVersion: v1                      
+kind: Namespace
+metadata:
+  name: nginx-app-argocd
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: nginx-app-argocd-channel
+  namespace: nginx-app-argocd
+spec:
+  type: Git
+  pathname: 'https://github.com/giannisalinetti/open-cluster-management-examples.git'
