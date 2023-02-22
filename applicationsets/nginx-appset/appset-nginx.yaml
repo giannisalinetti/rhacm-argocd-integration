@@ -17,9 +17,9 @@ spec:
     spec:
       project: "default"
       source:
-        repoURL: https://github.com/giannisalinetti/open-cluster-management-examples.git
+        repoURL: https://github.com/giannisalinetti/rhacm-argocd-integration.git
         targetRevision: main
-        path: application-lifecycle-management/nginx-app-kustomize/resources/overlays/prod
+        path: apps-resources/nginx-app-kustomize/overlays/prod
       destination:
         server: '{{server}}'
         namespace: nginx-app-argocd
