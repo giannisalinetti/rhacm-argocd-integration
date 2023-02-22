@@ -30,17 +30,3 @@ spec:
         syncOptions:
             - PruneLast=true
             - CreateNamespace=true
----
-apiVersion: v1                      
-kind: Namespace
-metadata:
-  name: nginx-app-argocd
----
-apiVersion: apps.open-cluster-management.io/v1
-kind: Channel
-metadata:
-  name: nginx-app-argocd-channel
-  namespace: nginx-app-argocd
-spec:
-  type: Git
-  pathname: 'https://github.com/giannisalinetti/open-cluster-management-examples.git'
