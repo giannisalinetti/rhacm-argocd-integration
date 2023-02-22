@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: quay.io/gbsalinetti/nginx
+        image: quay.io/gbsalinetti/nginx-app
         ports:
         - containerPort: 8080
         env:
