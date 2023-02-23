@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: quarkus-getting-started
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: all-openshift-clusters
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: 'quarkus-getting-started-{{name}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/giannisalinetti/rhacm-argocd-integration.git
+        targetRevision: main
+        path: apps-resources/quarkus-getting-started/overlays/prod
+      destination:
+        server: '{{server}}'
+        namespace: quarkus-getting-startedcd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+            - PruneLast=true
+            - CreateNamespace=true

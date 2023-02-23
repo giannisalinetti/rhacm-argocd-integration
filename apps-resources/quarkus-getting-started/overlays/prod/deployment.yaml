@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarkus-getting-started
+  labels:
+    app: quarkus-getting-started
+  annotations:
+    environment: production
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+      - name: quarkus-getting-started
+        image: quay.io/gbsalinetti/quarkus-getting-started
+        ports:
+        - containerPort: 8080
+        env:
+        - name: environment
+          value: prod
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
