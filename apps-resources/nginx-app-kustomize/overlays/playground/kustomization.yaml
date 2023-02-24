@@ -3,12 +3,6 @@ kind: Kustomization
 
 bases:
 - ../../base
-resources:
-- route.yaml
 patchesStrategicMerge:
 - deployment.yaml
-
-images:
-- name: quay.io/gbsalinetti/quarkus-getting-started
-  newTag: 1.0.0
 

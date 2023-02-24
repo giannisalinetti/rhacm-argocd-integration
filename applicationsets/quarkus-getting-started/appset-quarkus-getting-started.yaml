@@ -22,7 +22,7 @@ spec:
         path: apps-resources/quarkus-getting-started/overlays/prod
       destination:
         server: '{{server}}'
-        namespace: quarkus-getting-startedcd
+        namespace: quarkus-getting-started
       syncPolicy:
         automated:
           prune: true
